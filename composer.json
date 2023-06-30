@@ -1,0 +1,40 @@
+{
+    "name": "abmat/craft-translationhelper",
+    "description": "Translation helper",
+    "type": "craft-plugin",
+    "license": "proprietary",
+    "support": {
+        "email": "developer@abm.at",
+        "issues": "https://github.com/abm-werbeagentur/craft-translationhelper/issues?state=open",
+        "source": "https://github.com/abm-werbeagentur/craft-translationhelper",
+        "docs": "https://github.com/abm-werbeagentur/craft-translationhelper",
+        "rss": "https://github.com/abm-werbeagentur/craft-translationhelper/releases.atom"
+    },
+    "require": {
+        "php": ">=8.0.2",
+        "craftcms/cms": "^4.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "abmat\\translationhelper\\": "src/"
+        }
+    },
+    "extra": {
+        "handle": "abm-translationhelper",
+        "name": "Translation Helper",
+        "developer": "abm Feregyhazy & Simon GmbH",
+        "documentationUrl": "https://github.com/abm-werbeagentur/craft-translationhelper",
+        "class": "abmat\\translationhelper\\TranslationHelper"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.2"
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    }
+}
+
