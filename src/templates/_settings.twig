@@ -2,5 +2,42 @@
 {# @var settings \abmat\translationhelper\models\Settings #}
 
 {% import '_includes/forms.twig' as forms %}
+{% set allGroups = craft.app.sites.getAllGroups() %}
 
-{# ... #}
+<table class="data table-auto border-collapse">
+	<thead>
+		<tr>
+			<th>Site Group</th>
+			<th>Selected original site</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for group in allGroups %}
+			<tr>
+				<td class="thin">
+					<label for="">{{ group.name }}</label>
+				</td>
+				<td class="thin">
+					<select name="selectedSiteGroups[{{ group.id }}]">
+
+						{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
+
+						{% for site in sitesByGroup %}
+							
+							{% set selected = (settings.selectedSiteGroups is defined and settings.selectedSiteGroups[group.id] is defined and settings.selectedSiteGroups[group.id] == site.id
+								? true
+								: false) %}
+							
+						
+							<option value="{{ site.id }}"
+								{% if selected %}selected{% endif %}
+							>
+								{{ site.name }}
+							</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
