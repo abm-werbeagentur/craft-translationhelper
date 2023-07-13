@@ -18,7 +18,9 @@ class AbmTranslationHelperClass {
 	get_entry_text(btn) {
 		var data = {
 			elementid: btn.getAttribute('data-elementid'),
+			elementuid: btn.getAttribute('data-elementuid'),
 			originalsiteid: btn.getAttribute('data-originalsiteid'),
+			elementcontext: btn.getAttribute('data-elementcontext'),
 			handle: btn.getAttribute('data-handle'),
 			CSRF_TOKEN: $('input[name="CSRF_TOKEN"]').val()
 		};
@@ -29,23 +31,9 @@ class AbmTranslationHelperClass {
 			data: data,
 			success: data =>{
 				btn.replaceWith(data.value);
-				/*
-				if(data.res){
-					this.view_success_message(data.msg)
-				}else{
-					this.errors.push(data.msg);
-					this.view_error_message()
-				}
-				$("#buddy_generate_entry").prop('disabled',false).removeClass('loading')
-				*/
 			},
 			error:e => {
-				console.log(e)
-				/*
-				this.errors.push(e.statusText);
-				this.view_error_message()
-				$("#buddy_generate_entry").prop('disabled',false).removeClass('loading')
-				*/
+				console.error(e)
 			},
 			dataType:'json'
 		});

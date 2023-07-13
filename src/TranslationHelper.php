@@ -8,6 +8,7 @@ use craft\base\Model;
 use craft\base\Plugin;
 use yii\base\Event;
 use craft\base\Field;
+use craft\fields\Matrix;
 use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\StringHelper;
@@ -79,6 +80,9 @@ class TranslationHelper extends Plugin
 				$currentSiteId = $event->element->siteId;
 
 				//echo "<br /><h1>begin sender</h1><pre>";print_r($event->sender);
+				//echo $event->element->getFieldContext() . "<br />";
+				//echo "<pre>";print_r($event->element);echo "</pre>";
+				//echo $event->sender->handle . " - " . $event->sender->id . " - " . $event->element->uid . "<br />";
 
 				$showTranslationHelperButton = true;
 				switch($event->sender->translationMethod) {
@@ -88,16 +92,16 @@ class TranslationHelper extends Plugin
 					}break;
 
 					case Field::TRANSLATION_METHOD_SITE: {
-						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId])) {
-							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId]);
+						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId])) {
+							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId]);
 						} else {
 							$site = Craft::$app->sites->getPrimarySite();
 						}
 					}break;
 
 					case Field::TRANSLATION_METHOD_SITE_GROUP: {
-						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId])) {
-							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId]);
+						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId])) {
+							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId]);
 						} else {
 							$site = Craft::$app->sites->getPrimarySite();
 						}
@@ -120,8 +124,24 @@ class TranslationHelper extends Plugin
 					return;
 				}
 
-
-
+				/* check if element is part of matrixBlock ... if yes check propagationMethod of matrixBlock */
+				$elementContext = $event->element->getFieldContext();
+				$contextArray = explode(":", $elementContext);
+				switch($contextArray[0]) {
+					case 'matrixBlockType': {
+						if($event->element->uid) {
+							$matrixElement = Craft::$app->elements->getElementByUid($event->element->uid, null, $currentSiteId);
+							if($matrixElement) {
+								//$matrixField = Craft::$app->fields->getFieldById($matrixElement->fieldId);
+								switch(Craft::$app->fields->getFieldById($matrixElement->fieldId)->propagationMethod) {
+									case Matrix::PROPAGATION_METHOD_NONE: {
+										return;
+									}break;
+								}
+							}
+						}
+					}break;
+				}
 
 				switch(get_class($event->sender)) {
 					case 'craft\fields\Lightswitch': {

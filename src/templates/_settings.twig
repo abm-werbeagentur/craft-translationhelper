@@ -8,36 +8,52 @@
 	<thead>
 		<tr>
 			<th>Site Group</th>
+			<th></th>
 			<th>Selected original site</th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for group in allGroups %}
 			<tr>
-				<td class="thin">
+				<td class="thin" colspan="3">
 					<label for="">{{ group.name }}</label>
-				</td>
-				<td class="thin">
-					<select name="selectedSiteGroups[{{ group.id }}]">
-
-						{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
-
-						{% for site in sitesByGroup %}
-							
-							{% set selected = (settings.selectedSiteGroups is defined and settings.selectedSiteGroups[group.id] is defined and settings.selectedSiteGroups[group.id] == site.id
-								? true
-								: false) %}
-							
-						
-							<option value="{{ site.id }}"
-								{% if selected %}selected{% endif %}
-							>
-								{{ site.name }}
-							</option>
-						{% endfor %}
-					</select>
+					<input type="hidden" name="selectedSiteGroups[{{ group.id }}]" value="" />
 				</td>
 			</tr>
+			
+			{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
+			{% for site in sitesByGroup %}
+				<tr>
+					<td class="thin">&nbsp;</td>
+					<td class="thin">
+						{{ site.name }}
+					</td>
+					<td class="thin">
+						<select name="selectedSiteGroups[{{ group.id }}][{{ site.id }}]">
+							<option value="0"
+									{% if selected %}selected{% endif %}
+								>
+									{{ 'no original text'|t }}
+								</option>
+							{% for siteInner in sitesByGroup %}
+								
+								{% set selected = (settings.selectedSiteGroups is defined 
+										and settings.selectedSiteGroups[group.id][site.id] is defined 
+										and settings.selectedSiteGroups[group.id][site.id] == siteInner.id
+									? true
+									: false) %}
+								
+							
+								<option value="{{ siteInner.id }}"
+									{% if selected %}selected{% endif %}
+								>
+									{{ siteInner.name }}
+								</option>
+							{% endfor %}
+						</select>
+					</td>
+				</tr>
+			{% endfor %}
 		{% endfor %}
 	</tbody>
 </table>

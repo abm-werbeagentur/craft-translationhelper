@@ -1,8 +1,12 @@
-<button type="button" 
-	data-elementid="{{ event.element.id }}"
-	data-handle="{{ event.sender.handle }}"
-	data-originalsiteid="{{ original_site.id }}"
-	data-hash="{{ hash }}"
-	class="btn abmtranslationhelper">
-	{{ 'Show original text'|t('abm-translationhelper') }}
-</button>
+<div class="pt-6">
+	<button type="button" 
+		data-elementid="{{ event.element.id }}"
+		data-elementuid="{{ event.element.uid }}"
+		data-handle="{{ event.sender.handle }}"
+		data-originalsiteid="{{ original_site.id }}"
+		data-elementcontext="{{ event.element.getFieldContext }}"
+		data-hash="{{ hash }}"
+		class="btn abmtranslationhelper">
+		{{ 'Show original text'|t('abm-translationhelper') }}
+	</button>
+</div>
