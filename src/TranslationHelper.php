@@ -79,11 +79,6 @@ class TranslationHelper extends Plugin
 				$settings = TranslationHelper::getInstance()->getSettings();
 				$currentSiteId = $event->element->siteId;
 
-				//echo "<br /><h1>begin sender</h1><pre>";print_r($event->sender);
-				//echo $event->element->getFieldContext() . "<br />";
-				//echo "<pre>";print_r($event->element);echo "</pre>";
-				//echo $event->sender->handle . " - " . $event->sender->id . " - " . $event->element->uid . "<br />";
-
 				$showTranslationHelperButton = true;
 				switch($event->sender->translationMethod) {
 					case Field::TRANSLATION_METHOD_NONE: {
@@ -132,7 +127,6 @@ class TranslationHelper extends Plugin
 						if($event->element->uid) {
 							$matrixElement = Craft::$app->elements->getElementByUid($event->element->uid, null, $currentSiteId);
 							if($matrixElement) {
-								//$matrixField = Craft::$app->fields->getFieldById($matrixElement->fieldId);
 								switch(Craft::$app->fields->getFieldById($matrixElement->fieldId)->propagationMethod) {
 									case Matrix::PROPAGATION_METHOD_NONE: {
 										return;
@@ -144,15 +138,6 @@ class TranslationHelper extends Plugin
 				}
 
 				switch(get_class($event->sender)) {
-					case 'craft\fields\Lightswitch': {
-						//Lightswitch
-					}break;
-
-					case 'abmat\tinymce\Field': {
-						//TinyMCE
-						//echo "<pre>";print_r($event->sender);echo "</pre>";
-					}break;
-					
 					case 'craft\fields\Matrix':
 					case 'craft\fields\Assets': {
 						//asset
@@ -160,7 +145,7 @@ class TranslationHelper extends Plugin
 					}break;
 
 					default: {
-						//echo get_class($event->sender) . "<br />";
+						//do nothing
 					}break;
 				}
 

@@ -24,24 +24,26 @@ class ElementController extends Controller {
 		$this->requirePostRequest();
 		
 		$params = $this->request->getBodyParams();
-		$original_element = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+
+		$originalSite = Craft::$app->sites->getSiteById($params['originalsiteid']);
+		$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
 		$value = '';
-		if($original_element) {
-			$value = $original_element->getFieldValue($params['handle']);
+		if($originalElement) {
+			$value = $originalElement->getFieldValue($params['handle']);
 		}
 
 		/*
 		$elementContext = $params['elementcontext'];
 		if($elementContext == 'global') {
-			$original_element = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
-			$value = $original_element->getFieldValue($params['handle']);
+			$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+			$value = $originalElement->getFieldValue($params['handle']);
 		}
 		else {
 			$contextArray = explode(":", $elementContext);
 			switch($contextArray[0]) {
 				case 'matrixBlockType': {
-					$original_element = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
-					$value = $original_element->getFieldValue($params['handle']);
+					$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+					$value = $originalElement->getFieldValue($params['handle']);
 				}break;
 
 				default: {
@@ -52,10 +54,12 @@ class ElementController extends Controller {
 		*/
 
 		
-		$request = Craft::$app->getRequest();
-		if ($request->getAcceptsJson()) {
+		if (\Craft::$app->getRequest()->getAcceptsJson()) {
 			return $this->asJson(
 				[
+					'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}':", [
+						'siteName' => $originalSite->getName()
+					]),
 					'value' => strip_tags($value)
 				]
 			);

@@ -25,18 +25,32 @@ class AbmTranslationHelperClass {
 			CSRF_TOKEN: $('input[name="CSRF_TOKEN"]').val()
 		};
 
-		$.ajax({
-			type: "POST",
-			url: "/craft_admin/abm-translationhelper/element/fetch", /* TODO: URL */
-			data: data,
-			success: data =>{
-				btn.replaceWith(data.value);
-			},
-			error:e => {
-				console.error(e)
-			},
-			dataType:'json'
-		});
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "/craft_admin/abm-translationhelper/element/fetch"); /* TODO: URL */
+		xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader('Accept', 'application/json');
+		xhr.send(JSON.stringify(data));
+
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				const data = JSON.parse(xhr.responseText);
+
+				const div = document.createElement("div");
+				const header = document.createElement("h3");
+				const p = document.createElement("p");
+
+				header.innerHTML = data.headline;
+				p.innerHTML = data.value;
+				div.appendChild(header);
+				div.appendChild(p);
+				div.classList.add('hasText');
+
+				//btn.replaceWith("<div class='headline'>" + data.headline + "</div>" + data.value);
+				btn.replaceWith(div);
+			} else {
+				console.error(xhr.statusText);
+			}
+		};
 	}
 };
 
