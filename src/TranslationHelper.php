@@ -6,15 +6,19 @@ use Craft;
 use abmat\translationhelper\models\Settings;
 use craft\base\Model;
 use craft\base\Plugin;
-use yii\base\Event;
 use craft\base\Field;
+
+use yii\base\Event;
+
 use craft\fields\Matrix;
-use craft\fields\Assets;
+use craft\fields\PlainText;
+
 use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterUrlRulesEvent;
+
 use craft\helpers\StringHelper;
+
 use craft\web\UrlManager;
-use craft\models\Site;
 
 use abmat\translationhelper\assets\CPAssets;
 
@@ -80,10 +84,8 @@ class TranslationHelper extends Plugin
 				$settings = TranslationHelper::getInstance()->getSettings();
 				$currentSiteId = $event->element->siteId;
 
-				$showTranslationHelperButton = true;
 				switch($event->sender->translationMethod) {
 					case Field::TRANSLATION_METHOD_NONE: {
-						$showTranslationHelperButton = false;
 						return;
 					}break;
 
@@ -137,16 +139,17 @@ class TranslationHelper extends Plugin
 						}
 					}break;
 				}
-
+//echo get_class($event->sender) . "<br />";
+				$showTranslationHelperButton = false;
 				switch(get_class($event->sender)) {
-					case Matrix::class:
-					case Assets::class: {
-						//asset
-						$showTranslationHelperButton = false;
+					case 'abmat\tinymce\Field':
+					case PlainText::class: {
+						$showTranslationHelperButton = true;
 					}break;
 
 					default: {
-						//do nothing
+						//asset
+						$showTranslationHelperButton = false;
 					}break;
 				}
 
