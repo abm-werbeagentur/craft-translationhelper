@@ -9,6 +9,7 @@ use craft\base\Plugin;
 use yii\base\Event;
 use craft\base\Field;
 use craft\fields\Matrix;
+use craft\fields\Assets;
 use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\StringHelper;
@@ -138,8 +139,8 @@ class TranslationHelper extends Plugin
 				}
 
 				switch(get_class($event->sender)) {
-					case 'craft\fields\Matrix':
-					case 'craft\fields\Assets': {
+					case Matrix::class:
+					case Assets::class: {
 						//asset
 						$showTranslationHelperButton = false;
 					}break;

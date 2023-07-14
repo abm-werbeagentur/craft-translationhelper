@@ -26,7 +26,7 @@ class AbmTranslationHelperClass {
 		};
 
 		const xhr = new XMLHttpRequest();
-		xhr.open("POST", "/craft_admin/abm-translationhelper/element/fetch"); /* TODO: URL */
+		xhr.open("POST", "/"+Craft.cpTrigger+"/abm-translationhelper/element/fetch"); /* TODO: URL */
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader('Accept', 'application/json');
 		xhr.send(JSON.stringify(data));
