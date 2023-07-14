@@ -60,7 +60,7 @@ class ElementController extends Controller {
 					'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}':", [
 						'siteName' => $originalSite->getName()
 					]),
-					'value' => strip_tags($value)
+					'value' => $value
 				]
 			);
 		}
