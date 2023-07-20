@@ -106,15 +106,27 @@ class TranslationHelper extends Plugin
 					}break;
 
 					case FIELD::TRANSLATION_METHOD_LANGUAGE: {
-						$site = Craft::$app->sites->getPrimarySite();
+						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId])) {
+							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId]);
+						} else {
+							$site = Craft::$app->sites->getPrimarySite();
+						}
 					}break;
 
 					case FIELD::TRANSLATION_METHOD_CUSTOM: {
-						$site = Craft::$app->sites->getPrimarySite();
+						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId])) {
+							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId]);
+						} else {
+							$site = Craft::$app->sites->getPrimarySite();
+						}
 					}break;
 
 					default: {
-						$site = Craft::$app->sites->getPrimarySite();
+						if(isset($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId])) {
+							$site = Craft::$app->sites->getSiteById($settings->selectedSiteGroups[Craft::$app->sites->getSiteById($currentSiteId)->groupId][$currentSiteId]);
+						} else {
+							$site = Craft::$app->sites->getPrimarySite();
+						}
 					}break;
 				}
 
@@ -149,7 +161,7 @@ class TranslationHelper extends Plugin
 
 					default: {
 						//asset
-						$showTranslationHelperButton = false;
+						return;
 					}break;
 				}
 
