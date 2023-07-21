@@ -57,9 +57,9 @@ class ElementController extends Controller {
 		if (\Craft::$app->getRequest()->getAcceptsJson()) {
 			return $this->asJson(
 				[
-					'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}':", [
+					'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}'", [
 						'siteName' => $originalSite->getName()
-					]),
+					]).':',
 					'value' => $value
 				]
 			);
