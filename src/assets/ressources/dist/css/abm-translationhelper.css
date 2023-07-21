@@ -8,3 +8,15 @@
 	font-size: 1rem;
 	font-weight: 700;
 }
+
+.modal.abmtranslationhelper .content {
+	padding: 30px;
+	max-height: 86%;
+	overflow: auto;
+}
+.modal.abmtranslationhelper .footer {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}

@@ -64,6 +64,5 @@ class ElementController extends Controller {
 				]
 			);
 		}
-		
 	}
 }

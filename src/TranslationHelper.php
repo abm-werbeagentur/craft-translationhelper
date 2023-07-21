@@ -17,6 +17,7 @@ use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterUrlRulesEvent;
 
 use craft\helpers\StringHelper;
+use craft\helpers\Json;
 
 use craft\web\UrlManager;
 
@@ -55,6 +56,7 @@ class TranslationHelper extends Plugin
 		});
 		if (Craft::$app->getRequest()->getIsCpRequest()) {
 			$this->_registerCpRoutes();
+			$this->_registerTranslations();
 		}
 	}
 
@@ -184,5 +186,20 @@ class TranslationHelper extends Plugin
 				$event->rules['abm-translationhelper/element/fetch'] = 'abm-translationhelper/element/fetch';
 			}
 		);
+	}
+
+	private function _registerTranslations(): void
+	{
+		$view = Craft::$app->getView();
+		$customTranslations = [
+			'copy_to_clipbard' => Craft::t('abm-translationhelper', 'Copy to clipboard'),
+			'copied_to_clipboard' => Craft::t('abm-translationhelper', 'Copied to clipboard'),
+			'close' => Craft::t('abm-translationhelper', 'Close'),
+		];
+		
+		$view->registerJs('
+			if(typeof translations === "undefined") {translations = new Object();}
+			translations.abmtranslationhelper = '.Json::encode($customTranslations).';
+		');
 	}
 }
