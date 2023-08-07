@@ -36,6 +36,11 @@ class AbmTranslationHelperClass {
 				const data = JSON.parse(xhr.responseText);
 				const abmtranslationhelperModalContent = '<div class="header">'+data.headline+'</div><div class="content">'+data.value+'</div><div class="footer"><div class="buttons right"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
 				const modalDiv = document.createElement("div");
+
+				/* TODO: Umstellung auf Garnish HUD - https://github.com/pixelandtonic/garnishjs/tree/main/src 
+					https://craftcms.stackexchange.com/questions/20255/how-do-i-show-a-garnish-hud-in-the-cp/20262#20262
+					https://craftcms.stackexchange.com/tags/garnish/hot
+				*/
 				modalDiv.classList.add("modal");
 				modalDiv.classList.add("abmtranslationhelper");
 				modalDiv.innerHTML = abmtranslationhelperModalContent;

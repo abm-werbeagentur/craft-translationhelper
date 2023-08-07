@@ -85,6 +85,7 @@ class TranslationHelper extends Plugin
 				
 				$settings = TranslationHelper::getInstance()->getSettings();
 				$currentSiteId = $event->element->siteId;
+				$site = false;
 
 				switch($event->sender->translationMethod) {
 					case Field::TRANSLATION_METHOD_NONE: {
@@ -132,7 +133,7 @@ class TranslationHelper extends Plugin
 					}break;
 				}
 
-				if($site->id ==  $currentSiteId) {
+				if(!$site || $site->id ==  $currentSiteId) {
 					return;
 				}
 
