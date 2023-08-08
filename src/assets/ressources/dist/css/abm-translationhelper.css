@@ -1,3 +1,9 @@
+.abmTranslationHelperContainer {
+	text-align: right;
+}
+.abmTranslationHelperContainer button {
+	margin: 8px 0;
+}
 .abmTranslationHelperContainer .hasText {
 	padding: 10px;
 	margin: 10px 0;
@@ -8,15 +14,10 @@
 	font-size: 1rem;
 	font-weight: 700;
 }
-
-.modal.abmtranslationhelper .content {
-	padding: 30px;
-	max-height: 86%;
+.hud .body.abmtranslationhelperHudBody {
+	max-height: 70vh;
 	overflow: auto;
 }
-.modal.abmtranslationhelper .footer {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	left: 0;
+.abmTranslationHelperContainer .t9n-indicator {
+	pointer-events: none;
 }

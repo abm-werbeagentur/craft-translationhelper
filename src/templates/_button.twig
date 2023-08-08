@@ -6,7 +6,22 @@
 		data-originalsiteid="{{ original_site.id }}"
 		data-elementcontext="{{ event.element.getFieldContext }}"
 		data-hash="{{ hash }}"
+		title="{{ 'Show original text'|t('abm-translationhelper') }}"
 		class="btn abmtranslationhelper">
-		{{ 'Show original text'|t('abm-translationhelper') }}
+
+		<span class="t9n-indicator" title="{{ 'Show original text'|t('abm-translationhelper') }}" data-icon="language" aria-label="{{ 'Show original text'|t('abm-translationhelper') }}" role="img"></span>
+		{{ original_site.language }}
+
+		
 	</button>
+	<div class="hud_wrapper hidden">
+		<div id="abmTranslationHud-{{ event.element.id }}">
+			<div class="hud-footer">
+				<div class="buttons right">
+					<button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button>
+					<button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

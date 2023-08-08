@@ -142,6 +142,9 @@ class TranslationHelper extends Plugin
 				$contextArray = explode(":", $elementContext);
 				switch($contextArray[0]) {
 					case 'matrixBlockType': {
+						if(isset($event->element->owner) && is_object($event->element->owner) && get_class($event->element->owner) == 'verbb\vizy\elements\Block') {
+							return;
+						}
 						if($event->element->uid) {
 							$matrixElement = Craft::$app->elements->getElementByUid($event->element->uid, null, $currentSiteId);
 							if($matrixElement) {
@@ -154,10 +157,16 @@ class TranslationHelper extends Plugin
 						}
 					}break;
 				}
-//echo get_class($event->sender) . "<br />";
+
+				if(get_class($event->element) == 'verbb\vizy\elements\Block') {
+					return;
+				}
+				
 				$showTranslationHelperButton = false;
 				switch(get_class($event->sender)) {
 					case 'abmat\tinymce\Field':
+					case 'craft\redactor\Field':
+					case 'craft\ckeditor\Field':
 					case PlainText::class: {
 						$showTranslationHelperButton = true;
 					}break;
@@ -171,8 +180,8 @@ class TranslationHelper extends Plugin
 				if($showTranslationHelperButton) {
 					Craft::$app->getView()->registerAssetBundle(CPAssets::class);
 					
-					$event->html = "\n" . Craft::$app->view->renderTemplate('abm-translationhelper/_button.twig',
-						[ 'event' => $event, 'original_site' => $site, 'hash' => StringHelper::UUID()] ) . "\n" . $event->html;
+					$event->html = $event->html . "\n" . Craft::$app->view->renderTemplate('abm-translationhelper/_button.twig',
+						[ 'event' => $event, 'original_site' => $site, 'hash' => StringHelper::UUID()] );
 				}
 			}
 		);
@@ -195,6 +204,7 @@ class TranslationHelper extends Plugin
 		$customTranslations = [
 			'copy_to_clipbard' => Craft::t('abm-translationhelper', 'Copy to clipboard'),
 			'copied_to_clipboard' => Craft::t('abm-translationhelper', 'Copied to clipboard'),
+			'copied' => Craft::t('abm-translationhelper', 'Copied'),
 			'close' => Craft::t('abm-translationhelper', 'Close'),
 		];
 		

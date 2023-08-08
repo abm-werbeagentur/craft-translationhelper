@@ -6,16 +6,31 @@ class AbmTranslationHelperClass {
 		this.$buttons = document.querySelectorAll('button.abmtranslationhelper');
 		this.$buttons.forEach( (btn,index) => {
 			btn.addEventListener("click", (evt) => {
-				this.get_entry_text(btn);
+				var btn = evt.target;
+				var $inner = btn.querySelector('#abmTranslationHud-'+btn.getAttribute('data-elementid'));
+				var hud = false;
+				hud = new Garnish.HUD(btn, $inner, {
+					orientations: ['top', 'bottom', 'right', 'left'],
+					onHide: function() {
+						return false;
+					},
+					onShow: function(hud) {
+						var btn = hud.target.$trigger[0];
+						AbmTranslationHelperObject.get_entry_text(btn, hud);
+					}
+				});
+				return false;
+				//
 			});
 		});
 	}
 
-	view_success_message() {
+	get_entry_text(btn, hud) {
+		if(typeof hud !== 'object')
+			return;
 
-	}
-
-	get_entry_text(btn) {
+		var hudTarget = hud.target;
+		
 		var data = {
 			elementid: btn.getAttribute('data-elementid'),
 			elementuid: btn.getAttribute('data-elementuid'),
@@ -34,60 +49,23 @@ class AbmTranslationHelperClass {
 		xhr.onload = function() {
 			if (xhr.status === 200) {
 				const data = JSON.parse(xhr.responseText);
-				const abmtranslationhelperModalContent = '<div class="header">'+data.headline+'</div><div class="content">'+data.value+'</div><div class="footer"><div class="buttons right"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
-				const modalDiv = document.createElement("div");
+				const abmtranslationhelperModalContent = '<div class="hud-header">'+data.headline+'</div><textarea class="copyText" style="display: none;">'+data.value+'</textarea><div class="abmtranslationhelperHudBody body">'+data.value+'</div><div class="hud-footer"><div class="buttons right"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
+				hudTarget.updateBody(abmtranslationhelperModalContent);
+				hudTarget.updateSizeAndPosition(true);
 
-				/* TODO: Umstellung auf Garnish HUD - https://github.com/pixelandtonic/garnishjs/tree/main/src 
-					https://craftcms.stackexchange.com/questions/20255/how-do-i-show-a-garnish-hud-in-the-cp/20262#20262
-					https://craftcms.stackexchange.com/tags/garnish/hot
-				*/
-				modalDiv.classList.add("modal");
-				modalDiv.classList.add("abmtranslationhelper");
-				modalDiv.innerHTML = abmtranslationhelperModalContent;
-				
-				var myModal = new Garnish.Modal(modalDiv);
-
-				modalDiv.querySelector('div.footer button.closer').addEventListener("click", (evt) => {
-					myModal.hide();
+				hud.target.$body[0].querySelector('button.abm-hud-closer').addEventListener("click", (evt) => {
+					evt.preventDefault();
+					hud.target.hide();
 				});
-				modalDiv.querySelector('div.footer button.copyClipboard').addEventListener("click", (evt) => {
-					const contentDiv = modalDiv.querySelectorAll('div.content')[0];
 
-					/* BEGIN HTML kopieren */
-					/*
-					const html = contentDiv.innerHTML;
-					const textarea = document.createElement("textarea");
-					textarea.textContent = html;
-					//textarea.style.display = "none";
-					document.body.appendChild(textarea);
-
-					textarea.select();
-					document.execCommand("copy");
-					textarea.remove();
-					*/
-					/* END HTML kopieren */
-
-
-
-					/* BEGIN Content kopieren */
-					// Create a range object and select the text content of the div
-					const range = document.createRange();
-					range.selectNode(contentDiv);
-
-					// Get the current selection and remove any existing ranges
-					const selection = window.getSelection();
-					selection.removeAllRanges();
-
-					// Add the new range to the selection
-					selection.addRange(range);
-
-					// Execute the copy command
+				hud.target.$body[0].querySelector('div.hud-footer button.copyClipboard').addEventListener("click", (evt) => {
+					const copyTextarea = hud.target.$body[0].querySelector('textarea.copyText');
+					copyTextarea.style.display = '';
+					copyTextarea.select();
 					document.execCommand('copy');
-
-					// Clean up the selection
-					selection.removeAllRanges();
-					/* END Content kopieeren */
+					copyTextarea.style.display = 'none';
 					
+					//evt.target.textContent = translations.abmtranslationhelper.copied;
 					alert(translations.abmtranslationhelper.copied_to_clipboard);
 				});
 			} else {
@@ -97,7 +75,8 @@ class AbmTranslationHelperClass {
 	}
 };
 
+var AbmTranslationHelperObject = Object;
 
 document.addEventListener("DOMContentLoaded", () => {
-	AbmTranslationHelperClass = new AbmTranslationHelperClass()
+	AbmTranslationHelperObject = new AbmTranslationHelperClass()
 });
