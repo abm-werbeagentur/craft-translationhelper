@@ -4,37 +4,37 @@
 {% import '_includes/forms.twig' as forms %}
 {% set allGroups = craft.app.sites.getAllGroups() %}
 
-<table class="data table-auto border-collapse">
-	<thead>
-		<tr>
-			<th>Site Group</th>
-			<th>Site</th>
-			<th>Selected original site</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for group in allGroups %}
+{% for group in allGroups %}
+	{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
+	
+	<table class="data table-auto border-collapse translationHelperSettingsTable" width="100%" cellpadding="10">
+		<thead>
 			<tr>
-				<td class="thin" colspan="3">
+				<th>Site Group</th>
+				<th>Site</th>
+				<th>Selected original site</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="thin centeralign siteGroupName" rowspan="{{ sitesByGroup|length + 1 }}">
 					<label for="">{{ group.name }}</label>
 					<input type="hidden" name="selectedSiteGroups[{{ group.id }}]" value="" />
 				</td>
 			</tr>
 			
-			{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
 			{% for site in sitesByGroup %}
 				<tr>
-					<td class="thin">&nbsp;</td>
-					<td class="thin">
+					<td class="thin siteName">
+						<span class="status {{ site.getEnabled() == 1 ? 'enabled' : 'disbled' }}"></span>
 						{{ site.name }}
 					</td>
-					<td class="thin">
+					<td class="thin siteOption">
 						<select name="selectedSiteGroups[{{ group.id }}][{{ site.id }}]">
 							<option value="0">
-									{{ 'no original text'|t }}
-								</option>
+								{{ 'no original text'|t }}
+							</option>
 							{% for siteInner in sitesByGroup %}
-								
 								{% set selected = (settings.selectedSiteGroups is defined 
 										and settings.selectedSiteGroups[group.id][site.id] is defined 
 										and settings.selectedSiteGroups[group.id][site.id] == siteInner.id
@@ -52,6 +52,6 @@
 					</td>
 				</tr>
 			{% endfor %}
-		{% endfor %}
-	</tbody>
-</table>
+		</tbody>
+	</table>
+{% endfor %}

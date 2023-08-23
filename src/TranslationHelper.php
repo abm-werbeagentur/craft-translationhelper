@@ -68,6 +68,7 @@ class TranslationHelper extends Plugin
 
 	protected function settingsHtml(): ?string
 	{
+		Craft::$app->getView()->registerAssetBundle(CPAssets::class);
 		return Craft::$app->view->renderTemplate('abm-translationhelper/_settings.twig', [
 			'plugin' => $this,
 			'settings' => $this->getSettings(),
