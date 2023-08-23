@@ -31,6 +31,9 @@ class ElementController extends Controller {
 		if($originalElement) {
 			$value = $originalElement->getFieldValue($params['handle']);
 		}
+		if($value == NULL) {
+			$value = '';
+		}
 
 		/*
 		$elementContext = $params['elementcontext'];
