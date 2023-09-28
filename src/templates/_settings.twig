@@ -5,53 +5,53 @@
 {% set allGroups = craft.app.sites.getAllGroups() %}
 
 {% for group in allGroups %}
-	{% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
-	
-	<table class="data table-auto border-collapse translationHelperSettingsTable" width="100%" cellpadding="10">
-		<thead>
-			<tr>
-				<th>Site Group</th>
-				<th>Site</th>
-				<th>Selected original site</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="thin centeralign siteGroupName" rowspan="{{ sitesByGroup|length + 1 }}">
-					<label for="">{{ group.name }}</label>
-					<input type="hidden" name="selectedSiteGroups[{{ group.id }}]" value="" />
-				</td>
-			</tr>
-			
-			{% for site in sitesByGroup %}
-				<tr>
-					<td class="thin siteName">
-						<span class="status {{ site.getEnabled() == 1 ? 'enabled' : 'disbled' }}"></span>
-						{{ site.name }}
-					</td>
-					<td class="thin siteOption">
-						<select name="selectedSiteGroups[{{ group.id }}][{{ site.id }}]">
-							<option value="0">
-								{{ 'no original text'|t }}
-							</option>
-							{% for siteInner in sitesByGroup %}
-								{% set selected = (settings.selectedSiteGroups is defined 
-										and settings.selectedSiteGroups[group.id][site.id] is defined 
-										and settings.selectedSiteGroups[group.id][site.id] == siteInner.id
-									? true
-									: false) %}
-								
-							
-								<option value="{{ siteInner.id }}"
-									{% if selected %}selected{% endif %}
-								>
-									{{ siteInner.name }}
-								</option>
-							{% endfor %}
-						</select>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    {% set sitesByGroup = craft.app.sites.getSitesByGroupId(group.id) %}
+    
+    <table class="data table-auto border-collapse translationHelperSettingsTable" width="100%" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Site Group</th>
+                <th>Site</th>
+                <th>Selected original site</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="thin centeralign siteGroupName" rowspan="{{ sitesByGroup|length + 1 }}">
+                    <label for="">{{ group.name }}</label>
+                    <input type="hidden" name="selectedSiteGroups[{{ group.id }}]" value="" />
+                </td>
+            </tr>
+            
+            {% for site in sitesByGroup %}
+                <tr>
+                    <td class="thin siteName">
+                        <span class="status {{ site.getEnabled() == 1 ? 'enabled' : 'disbled' }}"></span>
+                        {{ site.name }}
+                    </td>
+                    <td class="thin siteOption">
+                        <select name="selectedSiteGroups[{{ group.id }}][{{ site.id }}]">
+                            <option value="0">
+                                {{ 'no original text'|t }}
+                            </option>
+                            {% for siteInner in sitesByGroup %}
+                                {% set selected = (settings.selectedSiteGroups is defined 
+                                        and settings.selectedSiteGroups[group.id][site.id] is defined 
+                                        and settings.selectedSiteGroups[group.id][site.id] == siteInner.id
+                                    ? true
+                                    : false) %}
+                                
+                            
+                                <option value="{{ siteInner.id }}"
+                                    {% if selected %}selected{% endif %}
+                                >
+                                    {{ siteInner.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endfor %}

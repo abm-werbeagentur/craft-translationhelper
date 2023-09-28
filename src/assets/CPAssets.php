@@ -8,11 +8,11 @@ namespace abmat\translationhelper\assets;
 
 use craft\web\AssetBundle;
 
-class CPAssets extends AssetBundle {
-
-	public function init(): void
+class CPAssets extends AssetBundle
+{
+    public function init(): void
     {
-        $this->sourcePath = __DIR__."/ressources/dist";
+        $this->sourcePath = __DIR__ . "/ressources/dist";
 
         $this->js = [
             'js/abm-translationhelper.js',

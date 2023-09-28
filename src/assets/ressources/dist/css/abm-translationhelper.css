@@ -1,51 +1,51 @@
 .abmTranslationHelperContainer {
-	text-align: right;
+    text-align: right;
 }
 .abmTranslationHelperContainer button {
-	margin: 8px 0;
+    margin: 8px 0;
 }
 .abmTranslationHelperContainer .hasText {
-	padding: 10px;
-	margin: 10px 0;
-	border: 2px solid #eee;
-	border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #eee;
+    border-radius: 10px;
 }
 .abmTranslationHelperContainer .hasText h3 {
-	font-size: 1rem;
-	font-weight: 700;
+    font-size: 1rem;
+    font-weight: 700;
 }
 .hud .body.abmtranslationhelperHudBody {
-	max-height: 70vh;
-	overflow: auto;
+    max-height: 70vh;
+    overflow: auto;
 }
 .abmTranslationHelperContainer .t9n-indicator {
-	pointer-events: none;
+    pointer-events: none;
 }
 
 .translationHelperSettingsTable {
-	margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 .translationHelperSettingsTable th {
-	width: 33.33333%;
+    width: 33.33333%;
 }
 .translationHelperSettingsTable td {
-	padding: 15px !important;
-	border-bottom: 1px solid var(--gray-050);
-	background-color: transparent;
+    padding: 15px !important;
+    border-bottom: 1px solid var(--gray-050);
+    background-color: transparent;
 }
 .translationHelperSettingsTable tr:hover {
-	--hover-bg-color: transparent;
+    --hover-bg-color: transparent;
 }
 .translationHelperSettingsTable tr:last-child td {
-	border-bottom: 0;
+    border-bottom: 0;
 }
 .translationHelperSettingsTable td.siteGroupName {
-	background-color: var(--gray-050) !important;
+    background-color: var(--gray-050) !important;
 }
 .translationHelperSettingsTable select {
-	background-color: var(--gray-050);
-	border: 1px solid var(--gray-090);
-	padding: 10px 30px;
-	text-align: center;
-	border-radius: 10px;
+    background-color: var(--gray-050);
+    border: 1px solid var(--gray-090);
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 10px;
 }

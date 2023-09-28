@@ -7,65 +7,61 @@
 namespace abmat\translationhelper\controllers;
 
 use Craft;
-use craft\db\Table;
-use craft\web\Controller;
-use craft\web\Response;
-use yii\web\BadRequestHttpException;
 use craft\services\Elements;
-use craft\helpers\Db;
-use craft\helpers\ArrayHelper;
+use craft\web\Controller;
 
-class ElementController extends Controller {
-	/**
-	 * @throws ForbiddenHttpException
-	 */
-	public function actionFetch ()
-	{
-		$this->requirePostRequest();
-		
-		$params = $this->request->getBodyParams();
+class ElementController extends Controller
+{
+    /**
+     * @throws ForbiddenHttpException
+     */
+    public function actionFetch()
+    {
+        $this->requirePostRequest();
+        
+        $params = $this->request->getBodyParams();
 
-		$originalSite = Craft::$app->sites->getSiteById($params['originalsiteid']);
-		$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
-		$value = '';
-		if($originalElement) {
-			$value = $originalElement->getFieldValue($params['handle']);
-		}
-		if($value == NULL) {
-			$value = '';
-		}
+        $originalSite = Craft::$app->sites->getSiteById($params['originalsiteid']);
+        $originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+        $value = '';
+        if ($originalElement) {
+            $value = $originalElement->getFieldValue($params['handle']);
+        }
+        if ($value == null) {
+            $value = '';
+        }
 
-		/*
-		$elementContext = $params['elementcontext'];
-		if($elementContext == 'global') {
-			$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
-			$value = $originalElement->getFieldValue($params['handle']);
-		}
-		else {
-			$contextArray = explode(":", $elementContext);
-			switch($contextArray[0]) {
-				case 'matrixBlockType': {
-					$originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
-					$value = $originalElement->getFieldValue($params['handle']);
-				}break;
+        /*
+        $elementContext = $params['elementcontext'];
+        if($elementContext == 'global') {
+            $originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+            $value = $originalElement->getFieldValue($params['handle']);
+        }
+        else {
+            $contextArray = explode(":", $elementContext);
+            switch($contextArray[0]) {
+                case 'matrixBlockType': {
+                    $originalElement = Craft::$app->elements->getElementById($params['elementid'], null, $params['originalsiteid']);
+                    $value = $originalElement->getFieldValue($params['handle']);
+                }break;
 
-				default: {
+                default: {
 
-				}break;
-			}
-		}
-		*/
+                }break;
+            }
+        }
+        */
 
-		
-		if (\Craft::$app->getRequest()->getAcceptsJson()) {
-			return $this->asJson(
-				[
-					'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}'", [
-						'siteName' => $originalSite->getName()
-					]).':',
-					'value' => $value
-				]
-			);
-		}
-	}
+        
+        if (\Craft::$app->getRequest()->getAcceptsJson()) {
+            return $this->asJson(
+                [
+                    'headline' => Craft::t('abm-translationhelper', "Original text from '{siteName}'", [
+                        'siteName' => $originalSite->getName(),
+                    ]) . ':',
+                    'value' => $value,
+                ]
+            );
+        }
+    }
 }
