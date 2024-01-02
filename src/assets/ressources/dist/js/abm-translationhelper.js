@@ -36,9 +36,9 @@ class AbmTranslationHelperClass {
             elementuid: btn.getAttribute('data-elementuid'),
             originalsiteid: btn.getAttribute('data-originalsiteid'),
             elementcontext: btn.getAttribute('data-elementcontext'),
-            handle: btn.getAttribute('data-handle'),
-            CSRF_TOKEN: $('input[name="CSRF_TOKEN"]').val()
+            handle: btn.getAttribute('data-handle')
         };
+        data[Craft.csrfTokenName] = Craft.csrfTokenValue;
 
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/"+Craft.cpTrigger+"/abm-translationhelper/element/fetch"); /* TODO: URL */
