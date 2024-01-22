@@ -49,7 +49,7 @@ class AbmTranslationHelperClass {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const data = JSON.parse(xhr.responseText);
-                const abmtranslationhelperModalContent = '<div class="hud-header">'+data.headline+'</div><textarea class="copyText" style="display: none;">'+data.value+'</textarea><div class="abmtranslationhelperHudBody body">'+data.value+'</div><div class="hud-footer"><div class="buttons right"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
+                const abmtranslationhelperModalContent = '<div class="hud-header">'+data.headline+'</div><textarea class="copyText" style="display: none;">'+data.value+'</textarea><div class="abmtranslationhelperHudBody body">'+data.value+'</div><div class="hud-footer"><div class="flex"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
                 hudTarget.updateBody(abmtranslationhelperModalContent);
                 hudTarget.updateSizeAndPosition(true);
 
