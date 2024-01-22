@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.3 - 2025-01-22
+- update for Craft CMS Version 5
+
 ## 1.0.2 - 2024-01-02
 
 ### Fixed
