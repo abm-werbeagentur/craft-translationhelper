@@ -2,9 +2,9 @@
     "name": "abmat/craft-translationhelper",
     "description": "Translation helper",
     "type": "craft-plugin",
-    "license": "proprietary",
+    "license": "MIT",
     "support": {
-        "email": "developer@abm.at",
+        "email": "office@abm.at",
         "issues": "https://github.com/abm-werbeagentur/craft-translationhelper/issues?state=open",
         "source": "https://github.com/abm-werbeagentur/craft-translationhelper",
         "docs": "https://github.com/abm-werbeagentur/craft-translationhelper",
