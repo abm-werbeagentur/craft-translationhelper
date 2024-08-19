@@ -1,28 +1,6 @@
 class AbmTranslationHelperClass {
 
-    $buttons;
-
     constructor() {
-        this.$buttons = document.querySelectorAll('button.abmtranslationhelper');
-        this.$buttons.forEach( (btn,index) => {
-            btn.addEventListener("click", (evt) => {
-                var btn = evt.target;
-                var $inner = btn.querySelector('#abmTranslationHud-'+btn.getAttribute('data-elementid'));
-                var hud = false;
-                hud = new Garnish.HUD(btn, $inner, {
-                    orientations: ['top', 'bottom', 'right', 'left'],
-                    onHide: function() {
-                        return false;
-                    },
-                    onShow: function(hud) {
-                        var btn = hud.target.$trigger[0];
-                        AbmTranslationHelperObject.get_entry_text(btn, hud);
-                    }
-                });
-                return false;
-                //
-            });
-        });
     }
 
     get_entry_text(btn, hud) {
@@ -75,8 +53,26 @@ class AbmTranslationHelperClass {
     }
 };
 
-var AbmTranslationHelperObject = Object;
+var AbmTranslationHelperObject = new AbmTranslationHelperClass();
 
-document.addEventListener("DOMContentLoaded", () => {
-    AbmTranslationHelperObject = new AbmTranslationHelperClass()
+
+var $translationHelperButtons = document.querySelectorAll('button.abmtranslationhelper');
+$translationHelperButtons.forEach( (btn,index) => {
+    btn.addEventListener("click", (evt) => {
+        var btn = evt.target;
+        var $inner = btn.querySelector('#abmTranslationHud-'+btn.getAttribute('data-elementid'));
+        var hud = false;
+        hud = new Garnish.HUD(btn, $inner, {
+            orientations: ['top', 'bottom', 'right', 'left'],
+            onHide: function() {
+                return false;
+            },
+            onShow: function(hud) {
+                var btn = hud.target.$trigger[0];
+                AbmTranslationHelperObject.get_entry_text(btn, hud);
+            }
+        });
+        return false;
+        //
+    });
 });
