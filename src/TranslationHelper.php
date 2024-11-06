@@ -37,6 +37,11 @@ class TranslationHelper extends Plugin
     public string $schemaVersion = '1.0.0';
     public bool $hasCpSettings = true;
 
+    /**
+     * @inheritdoc
+     */
+    public bool $hasCpSection = true;
+
     public static function config(): array
     {
         return [
