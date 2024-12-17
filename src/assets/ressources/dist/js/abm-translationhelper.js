@@ -18,16 +18,10 @@ class AbmTranslationHelperClass {
         };
         data[Craft.csrfTokenName] = Craft.csrfTokenValue;
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/"+Craft.cpTrigger+"/abm-translationhelper/element/fetch"); /* TODO: URL */
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.send(JSON.stringify(data));
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                const abmtranslationhelperModalContent = '<div class="hud-header">'+data.headline+'</div><textarea class="copyText" style="display: none;">'+data.value+'</textarea><div class="abmtranslationhelperHudBody body">'+data.value+'</div><div class="hud-footer"><div class="flex"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
+        Craft.postActionRequest("abm-translationhelper/element/fetch",data,$.proxy(function(response, textStatus) {
+            if (textStatus === 'success') {
+                // const data = JSON.parse(response);
+                const abmtranslationhelperModalContent = '<div class="hud-header">'+response.headline+'</div><textarea class="copyText" style="display: none;">'+response.value+'</textarea><div class="abmtranslationhelperHudBody body">'+response.value+'</div><div class="hud-footer"><div class="flex"><button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button><button class="btn cancel abm-hud-closer">' + translations.abmtranslationhelper.close + '</button></div></div>';
                 hudTarget.updateBody(abmtranslationhelperModalContent);
                 hudTarget.updateSizeAndPosition(true);
 
@@ -49,7 +43,7 @@ class AbmTranslationHelperClass {
             } else {
                 console.error(xhr.statusText);
             }
-        };
+        }, this));
     }
 };
 

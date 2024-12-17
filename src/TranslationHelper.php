@@ -40,7 +40,7 @@ class TranslationHelper extends Plugin
     /**
      * @inheritdoc
      */
-    public bool $hasCpSection = true;
+    public bool $hasCpSection = false;
 
     public static function config(): array
     {
@@ -199,7 +199,6 @@ class TranslationHelper extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function(RegisterUrlRulesEvent $event): void {
-                $event->rules['abm-translationhelper'] = 'abm-translationhelper/overview/index';
                 $event->rules['abm-translationhelper/element/fetch'] = 'abm-translationhelper/element/fetch';
             }
         );
