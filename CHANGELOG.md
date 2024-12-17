@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## 1.0.7 - 2025-12-17
-- Bugfix: Bugfix backend plugin page
+- Bugfix: Bugfix fetch data. Permissions not necessary for non admin users, so removed again
 
 ## 1.0.6 - 2025-11-06
 - Bugfix: Added plugin permission for non admin users
