@@ -1,21 +1,28 @@
 <div class="abmTranslationHelperContainer">
-    <button type="button" 
-        data-elementid="{{ event.element.id }}"
-        data-elementuid="{{ event.element.uid }}"
-        data-handle="{{ event.sender.handle }}"
-        data-originalsiteid="{{ original_site.id }}"
-        data-elementcontext="{{ event.element.getFieldContext }}"
-        data-hash="{{ hash }}"
-        title="{{ 'Show original text'|t('abm-translationhelper') }}"
-        class="btn abmtranslationhelper">
+    <button type="button"
+            {% if isTitleField is defined %}
+                data-titlefield="1"
+                data-elementid="{{ elementId }}"
+                data-elementuid="{{ elementUid }}"
+            {% else %}
+                data-elementid="{{ event.element.id }}"
+                data-elementuid="{{ event.element.uid }}"
+                data-handle="{{ event.sender.handle }}"
+                data-elementcontext="{{ event.element.getFieldContext }}"
+            {% endif %}
+            data-plaintext="{{ plainText }}"
+            data-originalsiteid="{{ original_site.id }}"
+            data-hash="{{ hash }}"
+            title="{{ 'Show original text'|t('abm-translationhelper') }}"
+            class="btn abmtranslationhelper">
 
         <span class="t9n-indicator" title="{{ 'Show original text'|t('abm-translationhelper') }}" data-icon="language" aria-label="{{ 'Show original text'|t('abm-translationhelper') }}" role="img"></span>
         {{ original_site.language }}
 
-        
+
     </button>
     <div class="hud_wrapper hidden">
-        <div id="abmTranslationHud-{{ event.element.id }}">
+        <div id="abmTranslationHud-{{ isTitleField is defined ? elementId : event.element.id }}">
             <div class="hud-footer">
                 <div class="flex">
                     <button class="btn copyClipboard">' + translations.abmtranslationhelper.copy_to_clipbard + '</button>
