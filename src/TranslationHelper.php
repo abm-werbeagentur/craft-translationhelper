@@ -10,7 +10,6 @@ use craft\base\Model;
 
 use craft\base\Plugin;
 
-use craft\enums\PropagationMethod;
 use craft\errors\SiteNotFoundException;
 use craft\events\DefineFieldHtmlEvent;
 use craft\events\RegisterUrlRulesEvent;
@@ -227,11 +226,10 @@ class TranslationHelper extends Plugin
                             if ($event->element->uid) {
                                 $matrixElement = Craft::$app->elements->getElementByUid($event->element->uid, null, $currentSiteId);
                                 if ($matrixElement) {
-                                    switch (Craft::$app->fields->getFieldById($matrixElement->fieldId)->propagationMethod) {
-                                        case PropagationMethod::None:
-                                        {
-                                            return;
-                                        }
+                                    // Issue #5: Compatibility error with Craft 4 craft\enums\PropagationMethod
+                                    if (Craft::$app->fields->getFieldById($matrixElement->fieldId)->propagationMethod === 'none' || 
+                                        (class_exists('\craft\enums\PropagationMethod') && Craft::$app->fields->getFieldById($matrixElement->fieldId)->propagationMethod === \craft\enums\PropagationMethod::None)) {
+                                        return;
                                     }
                                 }
                             }

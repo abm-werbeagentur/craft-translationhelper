@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.10 - 2026-05-11
+- Bugfix Issue #5: Compatibility error with Craft 4 craft\enums\PropagationMethod
+
 ## 1.0.9 - 2026-05-07
 - Bugfix Issue #4: Calling unknown method: craft\models\Site::getId() in a Craft4 installation
 

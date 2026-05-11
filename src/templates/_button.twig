@@ -10,7 +10,7 @@
                 data-handle="{{ event.sender.handle }}"
                 data-elementcontext="{{ event.element.getFieldContext }}"
             {% endif %}
-            data-plaintext="{{ plainText }}"
+            data-plaintext="{{ plainText ?? '1' }}"
             data-originalsiteid="{{ original_site.id }}"
             data-hash="{{ hash }}"
             title="{{ 'Show original text'|t('abm-translationhelper') }}"
