@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.11 - 2026-05-11
+- Bugfix Craft 5 get correct currentSiteId for Title fields
+
 ## 1.0.10 - 2026-05-11
 - Bugfix Issue #5: Compatibility error with Craft 4 craft\enums\PropagationMethod
 
