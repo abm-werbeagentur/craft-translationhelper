@@ -141,10 +141,14 @@ class TranslationHelper extends Plugin
 
                 // $currentSiteId = Cp::requestedSite()->getId();
                 // Craft 4
-                if (method_exists(Craft::$app->getSites(), 'getCurrentSite')) {
+                if(method_exists(Cp::class, 'requestedSite')) {
+                    $currentSiteId = Cp::requestedSite()->id;
+                }
+                else if (method_exists(Craft::$app->getSites(), 'getCurrentSite')) {
                     $currentSiteId = Craft::$app->getSites()->getCurrentSite()->id;
-                } else {
-                    $currentSiteId = Cp::requestedSite()->getId();
+                }
+                else {
+                    return;
                 }
                 $site = static::getOriginalSite($currentSiteId);
 
